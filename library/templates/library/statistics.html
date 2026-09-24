@@ -1,0 +1,26 @@
+
+{% extends "library/base.html" %}
+
+{% block content %}
+
+<h1 class="text-4xl font-bold text-slate-800 mb-8">
+    Library Statistics 📊
+</h1>
+
+<p class="text-lg text-gray-700 mb-2">Total books: {{ total_books }}</p>
+<p class="text-lg text-gray-700 mb-2">Available books: {{ available_books }}</p>
+<p class="text-lg text-gray-700 mb-2">Borrowed books: {{ borrowed_books }}</p>
+<p class="text-lg text-gray-700 mb-6">Total members: {{ total_members }}</p>
+
+{% if most_popular %}
+    <h2 class="text-2xl font-bold text-slate-800 mb-3">
+        Most Popular Book
+    </h2>
+    <p class="text-lg text-gray-700" >{{ most_popular.title }}</p>
+    <p class="text-gray-500" >Borrowed: {{ most_popular.borrow_count }} times</p>
+{% else %}
+    <p  class="text-gray-500 text-lg">No books available.</p>
+{% endif %}
+
+{% endblock %}
+

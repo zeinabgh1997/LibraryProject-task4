@@ -1,0 +1,58 @@
+{% extends "library/base.html" %}
+{% block content %}
+  <h1 class="text-4xl font-bold text-slate-800 mb-6">
+    Books📚
+  </h1>
+  <form method="get" class="flex gap-3 mb-8">
+  <input name="q" value="{{ query }}" placeholder="Search books"
+  class="w-80 px-4 py-3 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+  <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-800 transition cursor-pointer">
+    Search
+  </button>
+  </form>
+  
+  <form method="post" action="{% url 'add_book'  %}" class="flex gap-3 mb-10">
+    {% csrf_token %}
+
+    <input name="title" placeholder="Title" class="px-4 py-3 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" >
+    <input name="author" placeholder="Author" class="px-4 py-3 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input name="year" placeholder="Year" class="px-4 py-3 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+    <button type="submit" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition cursor-pointer" >
+      Add Book
+    </button>
+  </form>
+  {% for book in books %}
+    <article class="bg-white rounded-xl shadow-md p-6 mb-6">
+      <h2 class="text-3xl font-bold text-slate-800 mb-2">{{ book.title }}</h2>
+      <p class="text-gray-600 font-semibold  mb-2">{{ book.author }} — {{ book.year }}</p>
+      <p class="text-gray-700 font-semibold" >Available: {{ book.available }}</p>
+      <br>
+   <details>
+    <summary class="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition cursor-pointer">
+      Borrow
+    </summary>
+
+    {% for member in members %}
+        <form method="post" action="{% url 'borrow_book' book.id member.id %}" class="inline-block">
+            {% csrf_token %}
+            <button type="submit"  class="px-4 py-2 mt-2 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer">
+              {{ member.name }}
+            </button>
+        </form>
+    {% endfor %}
+    </details>
+      <br>
+      <form method="post" action="{% url 'return_book' book.id %}">
+        {% csrf_token %}
+        <button type="submit" class="px-5 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-700 transition cursor-pointer" >
+          Return
+        </button>
+      </form>
+
+    </article>
+    {% empty %}
+    <p class="text-gray-500 text-lg"> Book not found!</p>
+  {% endfor %}
+{% endblock %}

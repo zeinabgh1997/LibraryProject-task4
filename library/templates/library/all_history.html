@@ -1,0 +1,55 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+
+<h1 class="text-4xl font-bold text-slate-800 mb-6">
+    All Borrowing History 📖
+</h1>
+
+<h2 class="text-2xl font-bold text-slate-800 mb-4">Currently Borrowed</h2>
+
+{% for item in current_borrowings %}
+    <article class="bg-white rounded-xl shadow-md p-5 mb-4">
+        {% for member in members %}
+            {% if member.id == item.member_id %}
+                <p class="text-gray-700" >Member: {{ member.name }}</p>
+            {% endif %}
+        {% endfor %}
+
+        {% for book in books %}
+            {% if book.id == item.book_id %}
+                <p class="text-gray-700">Book: {{ book.title }}</p>
+            {% endif %}
+        {% endfor %}
+
+        <p class="text-gray-500" >Borrowed: {{ item.borrowed_at }}</p>
+    </article>
+{% empty %}
+    <p class="text-gray-700">No current borrowings.</p>
+{% endfor %}
+
+
+<h2 class="text-2xl font-bold text-slate-800 mb-4 mt-8">Returned Books</h2>
+
+{% for item in return_borrowings %}
+    <article class="bg-white rounded-xl shadow-md p-5 mb-4">
+        {% for member in members %}
+            {% if member.id == item.member_id %}
+                <p class="text-gray-700">Member: {{ member.name }}</p>
+            {% endif %}
+        {% endfor %}
+
+        {% for book in books %}
+            {% if book.id == item.book_id %}
+                <p class="text-gray-700">Book: {{ book.title }}</p>
+            {% endif %}
+        {% endfor %}
+
+        <p class="text-gray-500">Borrowed: {{ item.borrowed_at }}</p>
+        <p class="text-gray-500">Returned: {{ item.returned_at }}</p>
+    </article>
+{% empty %}
+    <p class="text-gray-700">No returned books.</p>
+{% endfor %}
+
+{% endblock %}

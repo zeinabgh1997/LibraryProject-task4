@@ -1,0 +1,46 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <title>{% block title %} library {% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="viewport-fit=cover,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+
+    <body class="bg-gray-100 text-gray-800">
+
+    <nav class="bg-slate-900 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+            <a href="{% url 'home' %}" class="text-2xl font-bold">
+                📚 Library
+            </a>
+
+            <div class="flex gap-6">
+                <a href="{% url 'book_list' %}" class="hover:text-blue-400 transition">
+                    Books
+                </a>
+
+                <a href="{% url 'member_list' %}" class="hover:text-blue-400 transition">
+                    Members
+                </a>
+
+                <a href="{% url 'all_history' %}" class="hover:text-blue-400 transition">
+                    History
+                </a>
+
+                <a href="{% url 'statistics' %}" class="hover:text-blue-400 transition">
+                    Statistics
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    </body>
+</html>
